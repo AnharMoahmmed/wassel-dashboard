@@ -51,24 +51,28 @@ export function OrdersPage() {
 
     const filtered = normalizedQuery
       ? orders.filter((order) =>
-          order.customerName.toLowerCase().includes(normalizedQuery)
+          order.customer.toLowerCase().includes(normalizedQuery)
         )
       : orders;
 
     return [...filtered].sort((a, b) => {
       switch (sortBy) {
         case 'date_desc':
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         case 'date_asc':
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
+          return (
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+          );
         case 'amount_desc':
-          return b.amount - a.amount;
+          return b.total - a.total;
         case 'amount_asc':
-          return a.amount - b.amount;
+          return a.total - b.total;
       }
     });
   }, [orders, searchQuery, sortBy]);
-
+  
   const totalPages = Math.ceil(filteredAndSortedOrders.length / ITEMS_PER_PAGE);
 
   const paginatedOrders = useMemo(() => {

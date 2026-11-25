@@ -3,7 +3,7 @@ import type { Order } from '../types/order';
 
 export function SummaryStrip({ orders }: { orders: Order[] }) {
   const totalOrders = orders.length;
-  const totalAmount = orders.reduce((sum, order) => sum + order.amount, 0);
+  const totalAmount = orders.reduce((sum, order) => sum + order.total, 0);
   const deliveredCount = orders.filter((o) => o.status === 'delivered').length;
   const activeCount = orders.filter((o) => o.status !== 'delivered').length;
 
